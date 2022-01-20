@@ -1,7 +1,10 @@
+import Layout from "../components/template/Layout";
+
 export default function Home() {
   return (
-    <div className={`bg-gradient-to-r from-green-500 to-blue-500`}>
-      <h1>Bibi Admin </h1>
-    </div>
+    <Layout titulo="Página Inicial" 
+    subtitulo="Estou construindo uma aplicação admin-template" >
+      <h3>Contéudo</h3>
+    </Layout>
   )
 }
