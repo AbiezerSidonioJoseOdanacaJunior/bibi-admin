@@ -1,3 +1,6 @@
+import { IconBell, IconHome, IconSetting } from "../icons/Index";
+import MenuItem from "./MenuItem";
+
 interface SideBarProps {
 
 }
@@ -5,7 +8,11 @@ interface SideBarProps {
 export default function SideBar() {
     return (
         <aside>
-            <h1>Menu Lateral</h1>
+           <ul>
+               <MenuItem url="/" texto="Início" icone={IconHome}/>
+               <MenuItem url="/config" texto="Configurações" icone={IconSetting}/>
+               <MenuItem url="/bell" texto="Notificação" icone={IconBell}/>
+           </ul>
         </aside>
     )
 }
