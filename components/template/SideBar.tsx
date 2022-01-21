@@ -1,4 +1,4 @@
-import { IconBell, IconHome, IconLogout, IconSetting } from "../icons/Index";
+import { IconBell, IconHome, IconLogout, IconSetting } from "../icons/index";
 import Logo from "./Logo";
 import MenuItem from "./MenuItem";
 
@@ -8,7 +8,9 @@ interface SideBarProps {
 
 export default function SideBar() {
     return (
-        <aside className="flex flex-col ">
+        <aside className="flex flex-col 
+        bg-gray-200 text-gray-700
+        dark:bg-gray-900 ">
             <div className={`
             flex flex-col items-center justify-center
             bg-gradient-to-r from-indigo-500 to-purple-800
@@ -25,8 +27,9 @@ export default function SideBar() {
                <MenuItem texto="Sair" icone={IconLogout}
                 onClick={() =>console.log('lougout')
                 }
-                className={`text-red-600
+                className={`text-red-600 dark:text-red-400
                 hover:bg-red-400 hover:text-white
+                dark:hover:text-white
                 `}
                />
            </ul>
