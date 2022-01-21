@@ -1,16 +1,26 @@
 import { useState } from "react";
 import AutInput from "../components/auth/AthInput";
+import { IconWarnig } from "../components/icons";
 
 export default function Autenticacao() {
+const [erro, setErro] = useState()    
 const [modo, setModo] = useState<'login' | 'cadastrar'>('login')    
 const [email, setEmail] = useState('')
 const [senha, setSenha] = useState('')
 
+function exibirErro(msg, tempoEmSegundo = 5) {
+    setErro(msg)
+    setTimeout(() => setErro(null), tempoEmSegundo * 1000)
+}
+
 function submeter() {
     if(modo === 'login') {
         console.log('login')
+        
     }else{
         console.log('cadastrar')
+        
+        
     }
 }
 
@@ -27,6 +37,16 @@ function submeter() {
                 `}>
                     {modo === 'login' ? 'Entre com a sua conta' : 'Cadastre-se na Plataforma!'}
                 </h1>
+
+                {erro ? (
+                    <div className={` flex items-center
+                        bg-red-400 text-white py-3 px-5 my-2 border border-red-700 rounded-lg
+                    `}>
+                        {IconWarnig()}
+                        <span className="ml-3" >{erro}</span>
+                    </div>
+                ) : false}
+
                 <AutInput 
                 label="Email"
                 valor={email}
