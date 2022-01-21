@@ -15,10 +15,15 @@ function submeter() {
 }
 
     return (
-        <div className="flex flex-col h-screen items-center justify-center">
-            <div className="w-1/2">
+        <div className="flex h-screen items-center justify-center">
+            <div className=" hidden md:block md:w-1/2 lg:w-2/3">
+                <img src="https://source.unsplash.com/random"
+                 alt="Imagem da tela de autenticação"
+                 className="h-screen w-full object-cover" />
+            </div>
+            <div className="m-10 w-full md:w-1/2 lg:w-1/3">
                 <h1 className={`
-                text-xl font-bold mb-5
+                text-3xl font-bold mb-5
                 `}>
                     {modo === 'login' ? 'Entre com a sua conta' : 'Cadastre-se na Plataforma!'}
                 </h1>
@@ -50,6 +55,21 @@ function submeter() {
                 `}>  
                 Entrar com Google
                 </button>
+                {modo === 'login' ? (
+                    <p className="mt-8"> 
+                        Novo por aqui?
+                        <a onClick={() => setModo('cadastrar')}className={`
+                            text-blue-500 hover:text-blue-700 font-semibold cursor-pointer
+                        `} > Crie sua Conta Gratuitamente</a>
+                    </p>
+                ) : (
+                    <p className="mt-8"> 
+                       Já faz parte da minha Comunidade?
+                        <a onClick={() => setModo('login')}className={`
+                            text-blue-500 hover:text-blue-700 font-semibold cursor-pointer
+                        `} > Entre com suas Credênciais!</a>
+                    </p>
+                )}
             </div>
         </div>
     )
