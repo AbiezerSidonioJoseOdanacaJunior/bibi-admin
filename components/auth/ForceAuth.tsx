@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Image from 'next/image'
 import router from 'next/router'
 import useAuth from '../../data/hook/useAuth'
@@ -10,12 +11,23 @@ export default function ForceAuth(pros) {
 
         return (
             <>
+            <Head>
+                <script 
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                            if(!document.cookie?.includes("bibi-admin-auth")) {
+                            window.location.href = "/autenticacao"
+                        }
+                        `
+                    }}
+                />
+            </Head>
                 {pros.children}
             </>
         )
     }
 
-    function renderizarCarregando(props) {
+    function renderizarCarregando() {
         return (
             <div className={`
                 flex justify-center items-center h-screen
