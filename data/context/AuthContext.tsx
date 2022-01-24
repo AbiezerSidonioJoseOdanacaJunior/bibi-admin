@@ -8,6 +8,7 @@ import route from 'next/router'
 
 interface AuthContextProps {
     usuario?: Usuario
+    carregando?: boolean
     loginGoogle?: () => Promise<void>
     lougout?: () => Promise<void>
 }
@@ -87,11 +88,13 @@ export function AuthProvider(props) {
         if(Cookies.get('bibi-admin-auth')) {
             const cancelar =  firebase.auth().onIdTokenChanged(configurarSessao)
               return () => cancelar()
+        } else {
+            setCarregando(false)
         }
     }, [])
 
     return (
-        <AuthContext.Provider value={{usuario, loginGoogle, lougout}}>
+        <AuthContext.Provider value={{usuario, carregando, loginGoogle, lougout}}>
             {props.children}
         </AuthContext.Provider>
     )
