@@ -9,6 +9,7 @@ import route from 'next/router'
 interface AuthContextProps {
     usuario?: Usuario
     loginGoogle?: () => Promise<void>
+    lougout?: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextProps>({})
@@ -26,9 +27,9 @@ const AuthContext = createContext<AuthContextProps>({})
     }
 }
 
-function gerenciarCookie(logado: booleam) {
+function gerenciarCookie(logado: boolean) {
     if(logado) {
-        Cookies.set('bibi-admin-auth', logado, {
+        Cookies.set('bibi-admin-auth', 'logado', {
             expires: 7
         })
     } else {
@@ -60,20 +61,37 @@ export function AuthProvider(props) {
     }
 
     async function loginGoogle() {
-        const resp = await firebase.auth().signInWithPopup(
-            new firebase.auth.GoogleAuthProvider()
-        )
-        configurarSessao(resp.user)
-        route.push('/')
+        try {
+            setCarregando(true)
+            const resp = await firebase.auth().signInWithPopup(
+                new firebase.auth.GoogleAuthProvider()
+            )
+            configurarSessao(resp.user)
+            route.push('/')
+        } finally {
+            setCarregando(false)
+        }
+    }
+
+    async function lougout() {
+        try {
+            setCarregando(true)
+            await firebase.auth().signOut()
+            await configurarSessao(null)
+        } finally {
+            setCarregando(false)
+        }
     }
 
     useEffect(() => {
-      const cancelar =  firebase.auth().onIdTokenChanged(configurarSessao)
-        return () => cancelar()
+        if(Cookies.get('bibi-admin-auth')) {
+            const cancelar =  firebase.auth().onIdTokenChanged(configurarSessao)
+              return () => cancelar()
+        }
     }, [])
 
     return (
-        <AuthContext.Provider value={{usuario, loginGoogle}}>
+        <AuthContext.Provider value={{usuario, loginGoogle, lougout}}>
             {props.children}
         </AuthContext.Provider>
     )

@@ -1,12 +1,13 @@
+import useAuth from "../../data/hook/useAuth";
 import { IconBell, IconHome, IconLogout, IconSetting } from "../icons/index";
 import Logo from "./Logo";
 import MenuItem from "./MenuItem";
 
-interface SideBarProps {
-
-}
 
 export default function SideBar() {
+
+    const { lougout } = useAuth()
+
     return (
         <aside className="flex flex-col 
         bg-gray-200 text-gray-700
@@ -25,8 +26,7 @@ export default function SideBar() {
            </ul>
            <ul className={``}>
                <MenuItem texto="Sair" icone={IconLogout}
-                onClick={() =>console.log('lougout')
-                }
+                onClick={lougout}
                 className={`text-red-600 dark:text-red-400
                 hover:bg-red-400 hover:text-white
                 dark:hover:text-white
