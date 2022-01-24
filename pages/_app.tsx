@@ -1,11 +1,14 @@
 import AppContext, { AppProvider } from '../data/context/AppContext'
 import '../styles/globals.css'
+import { AuthProvider } from '../data/AuthContext'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <AppProvider>
-       <Component {...pageProps} />
-    </AppProvider>
+    <AuthProvider>
+      <AppProvider>
+        <Component {...pageProps} />
+      </AppProvider>
+    </AuthProvider>
   )
 }
 
