@@ -12,7 +12,7 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps>({})
 
-/* async function usuarioNormalizado(usuarioFirebase: firebase.User): Promise<Usuario> {
+ async function usuarioNormalizado(usuarioFirebase: firebase.User): Promise<Usuario> {
     const token = await usuarioFirebase.getIdToken()
     return {
         uid: usuarioFirebase.uid,
@@ -22,14 +22,20 @@ const AuthContext = createContext<AuthContextProps>({})
         provedor: usuarioFirebase.providerData[0].providerId,
         imagemUrl: usuarioFirebase.photoURL
     }
-}*/
+}
 
 export function AuthProvider(props) {
     const [usuario, setUsuario] = useState<Usuario>(null)
 
     async function loginGoogle() {
-        console.log('login google...')
-        route.push('/')
+        const resp = await firebase.auth().signInWithPopup(
+            new firebase.auth.GoogleAuthProvider()
+        )
+        if(resp.user?.email) {
+            await usuarioNormalizado(resp.user)
+            setUsuario(usuario)
+            route.push('/')
+        }
 
     }
 
